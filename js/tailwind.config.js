@@ -1,5 +1,3 @@
-// agrega background image
-
 tailwind.config = {
   theme: {
     extend: {
@@ -9,7 +7,6 @@ tailwind.config = {
       backgroundImage: {
         'hero': "url('/img/hero.jpg')",
       }
-
     }
   }
 }
