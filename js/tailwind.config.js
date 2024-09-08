@@ -5,7 +5,7 @@ tailwind.config = {
         'poppins': ['Poppins', 'sans-serif'],
       },
       backgroundImage: {
-        'hero': "url('/img/hero.jpg')",
+        'hero': "url('./img/hero.jpg')",
       }
     }
   }
