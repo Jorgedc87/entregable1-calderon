@@ -42,4 +42,6 @@ Se intenta seguir con las **buenas prácticas**, definiendo **variables** y **fu
 
 - Se agregó un **console.table** al final de la función para mostrar una tabla de los pasajes vendidos.
 
+- Adicionalmente cree un array para hacer uso de objetos literales dentro. Se está guardando el objeto **pasajero**
+
 ##
