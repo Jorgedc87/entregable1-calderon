@@ -3,58 +3,75 @@ const pasajeros = []; // Array para guardar los datos de los pasajeros
 const descuentoIdaYVuelta = 0.85; // Descuento del 15% para pasajes de ida y vuelta
 const precioPasaje = 41000; // Precio del pasaje
 
-const preguntaCantidad = () => prompt('Ingrese la cantidad de pasajes que desea comprar'); // Pregunta la cantidad de pasajes a comprar
-
-// Verifica que cantidad sea un número válido (positivo) y los intentos sean menos de 3 con while
-const verificaCantidad = cantidad => {
+// Verifica que cantidad sea un número válido (positivo) y los intentos sean menos de 3 con do while
+const preguntaCantidad = () => {
   let intentos = 0;
-  while (isNaN(cantidad) || cantidad <= 0) {
-    cantidad = prompt('Ingrese una cantidad válida (mayor a 0)');
-    intentos++;
-    if (intentos === 2) {
-      alert('Cantidad inválida');
+  let cantidad;
+
+  do {
+    cantidad = prompt('Ingrese la cantidad de pasajes que desea comprar');
+    
+    if (cantidad === null) {
+      alert('Compra cancelada');
       return false;
     }
-  }
-  return true;
+
+    cantidad = parseInt(cantidad);
+    intentos++;
+    if (isNaN(cantidad) || cantidad <= 0) {
+      if (intentos < 3) {
+        alert('Cantidad inválida. Intente nuevamente.');
+      }
+    } else {
+      return cantidad;
+    }
+  } while (intentos < 3);
+
+  alert('Cantidad inválida. Se cancelará la compra');
+  return false; 
 }
 
+
 // Verifica que el nombre no sea null y los intentos sean menos de 3 con while
-const verificaNombre = nombre => {
+const verificaNombre = i => {
   let intentos = 0;
-  while (!nombre) {
-    nombre = prompt('Ingrese un nombre válido');
+  let nombre = prompt(`Ingrese un nombre para el pasajero ${i + 1}`);
+
+  while (!nombre && intentos < 2) {
+    nombre = prompt('Nombre inválido. Ingrese un nombre válido');
     intentos++;
-    if (intentos === 2) {
-      alert('Nombre inválido. Se cancelará la compra');
-      return false;
-    }
   }
 
+  if (!nombre) {
+    alert('Nombre inválido. Se cancelará la compra');
+    return false;
+  }
+  
   return nombre;
 }
 
 
-// Verifica que el DNI sea un numero entero y los intentos sean menos de 3 con while
-const verificaDni = dni => {
-  let intentos = 0;
-  while (!parseInt(dni)) {
-    dni = prompt('Ingrese un DNI válido');
-    intentos++;
-    if (intentos === 2) {
-      alert('DNI inválido. Se cancelará la compra');
-      return false;
+// Verifica que el DNI sea un numero entero mayor a 0 y los intentos sean menos de 3 con for
+const verificaDni = (nombre) => {
+  for (let i = 0; i < 3; i++) {
+    let dni = parseInt(prompt(`Ingrese el DNI de ${nombre}`));
+
+    // Verifica si el DNI es un número entero positivo
+    if (!isNaN(dni) && dni > 0) {
+      return dni; // Devuelve el DNI válido
     }
+    alert('DNI inválido. Intente de nuevo.');
   }
 
-  return dni;
+  alert('Superó los intentos para ingresar el DNI. Se cancelará la compra');
+  return false; // Cancela la compra si hay 3 intentos fallidos
 }
 
 // Pide datos del pasajero
 const consultaDatos = (i, idaYVuelta) => {
-  const nombre = verificaNombre(prompt(`Ingrese el nombre del pasajero ${i + 1}`));
+  const nombre = verificaNombre(i);
   if (!nombre) return false;
-  const dni = verificaDni(prompt(`Ingrese el DNI del pasajero ${nombre}`));
+  const dni = verificaDni(nombre);
   if (!dni) return false;
   if(idaYVuelta){
     pasajeros.push({ nombre, dni: parseInt(dni), tipo: 'ida' , precio: precioPasaje * descuentoIdaYVuelta });
@@ -90,9 +107,8 @@ const compraPasaje = () => {
 
   // Pregunta la cantidad de pasajes
   let cantidad = preguntaCantidad();
-
-  // Verifica que la cantidad sea válida
-  if (!verificaCantidad(cantidad)) return false;
+  // // Verifica que la cantidad sea válida
+  if (!cantidad) return;
 
   const idaYVuelta = confirm('¿Es pasaje de ida y vuelta?');
 
