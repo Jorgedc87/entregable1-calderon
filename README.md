@@ -44,4 +44,8 @@ Se intenta seguir con las **buenas prácticas**, definiendo **variables** y **fu
 
 - Adicionalmente cree un array para hacer uso de objetos literales dentro. Se está guardando el objeto **pasajero**
 
-##
+## Versión
+
+- **Entregable:** v1.0 
+- **Fecha de entrega:** 8/9/2024
+- **Autor:** Jorge Calderón
